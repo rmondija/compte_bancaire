@@ -40,6 +40,16 @@ try {
     <title>Tableau de Bord</title>
 </head>
 <body>
+<nav class="navbar">
+    <div class="container">
+        <a href="index.php" class="logo">Tableau de Bord</a>
+        <div class="nav-links">
+            <a href="logout.php" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+</nav>
 
 </body>
 </html>
