@@ -1,16 +1,15 @@
+/* ✅ Alignement général */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ✅ Style général du body */
 body {
     background-color: #f4f4f9;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    color: #333;
+    line-height: 1.6;
 }
 
 /* ✅ Barre de navigation */
@@ -30,15 +29,13 @@ body {
     text-decoration: none;
 }
 
-/* ✅ Aligner le bouton "Ajouter client" + "Déconnexion" */
-.navbar .nav-links {
+.nav-links {
     display: flex;
-    align-items: center;
     gap: 10px;
 }
 
 .navbar a {
-    color: #ffffff;
+    color: white;
     text-decoration: none;
     padding: 8px 14px;
     border-radius: 4px;
@@ -49,40 +46,13 @@ body {
     background-color: #495057;
 }
 
-/* ✅ Bouton "Ajouter Client" */
-.btn-add {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    display: flex;
-    align-items: center;
-}
-
-.btn-add i {
-    margin-right: 6px;
-}
-
-.btn-add:hover {
-    background-color: #45a049;
-}
-
 /* ✅ Bouton Déconnexion */
 .btn-logout {
     background-color: #dc3545;
     color: white;
-    padding: 10px 20px;
-    border: none;
+    padding: 10px 16px;
     border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s;
     display: flex;
     align-items: center;
 }
@@ -95,112 +65,20 @@ body {
     background-color: #c82333;
 }
 
-/* ✅ Boîte de connexion */
-.login-wrapper {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-}
-
-.login-container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-}
-
-.login-container:hover {
-    transform: translateY(-3px);
-}
-
-/* ✅ Titre */
-.login-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* ✅ Champ de formulaire */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* ✅ Bouton de connexion */
-.btn-login {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.btn-login:hover {
-    background-color: #0056b3;
-}
-
-/* ✅ Message d'erreur */
-.error-message {
-    background-color: #ffcccc;
-    padding: 12px;
-    color: #cc0000;
-    border: 1px solid #cc0000;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-/* ✅ Icône dans le bouton */
-.btn-login i {
-    margin-right: 8px;
-}
-
-/* ✅ Conteneur principal */
-.container {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-}
-
-/* ✅ Titre du tableau */
+/* ✅ Tableau */
 .table-title {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* ✅ Style du tableau */
 .modern-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
-.modern-table th, .modern-table td {
+.modern-table th,
+.modern-table td {
     padding: 12px;
     border-bottom: 1px solid #e0e0e0;
     text-align: center;
@@ -208,49 +86,43 @@ body {
 
 .modern-table th {
     background-color: #f4f4f4;
-    font-weight: bold;
 }
 
-.modern-table tr:hover {
-    background-color: #fafafa;
-}
-
-/* ✅ Alignement horizontal des boutons avec Flexbox */
+/* ✅ Alignement horizontal des boutons */
 .action-buttons {
     display: flex;
-    gap: 8px;
     justify-content: center;
-    align-items: center;
+    gap: 8px;
 }
 
-/* ✅ Style pour tous les boutons */
-.btn-view, 
-.btn-edit, 
+/* ✅ Boutons Voir, Modifier, Supprimer */
+.btn-view,
+.btn-edit,
 .btn-delete {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
+    width: 100px;
     padding: 10px;
     font-size: 14px;
     border: none;
     border-radius: 6px;
+    color: white;
     cursor: pointer;
-    text-decoration: none;
     transition: background-color 0.2s ease;
+    text-decoration: none;
 }
 
 /* ✅ Icônes dans les boutons */
 .btn-view i,
 .btn-edit i,
 .btn-delete i {
-    margin-right: 4px;
+    margin-right: 5px;
 }
 
 /* ✅ Bouton Voir */
 .btn-view {
     background-color: #17a2b8;
-    color: white;
 }
 
 .btn-view:hover {
@@ -270,7 +142,6 @@ body {
 /* ✅ Bouton Supprimer */
 .btn-delete {
     background-color: #dc3545;
-    color: white;
 }
 
 .btn-delete:hover {
@@ -280,32 +151,13 @@ body {
 /* ✅ Responsive Design */
 @media (max-width: 768px) {
     .action-buttons {
-        flex-direction: column;
+        flex-direction: row;
         gap: 5px;
     }
 
     .btn-view,
     .btn-edit,
     .btn-delete {
-        width: 100%; /* ✅ Pleine largeur sur mobile */
-    }
-
-    .stats {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-/* ✅ Suppression du cadre noir en bas */
-footer {
-    display: none;
-}
-
-/* ✅ Pleine largeur sur mobile */
-@media (max-width: 480px) {
-    .btn-view,
-    .btn-edit,
-    .btn-delete {
-        width: 100%;
+        width: 100%; /* Pleine largeur sur mobile */
     }
 }

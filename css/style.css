@@ -1,0 +1,254 @@
+/* ✅ Réinitialisation de base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ✅ Style général du body */
+body {
+    background-color: #f4f4f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Navbar */
+.navbar {
+    background-color: #343a40;
+    padding: 14px;
+}
+
+.navbar .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar .nav-link {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: #495057;
+    border-radius: 4px;
+}
+
+/* ✅ Bouton Déconnexion */
+.btn-danger {
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* ✅ Conteneur général */
+.container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ✅ Titre principal */
+h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ✅ Formulaire */
+form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* ✅ Bouton de formulaire */
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* ✅ Tableau */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.modern-table th, 
+.modern-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.modern-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.modern-table tr:hover {
+    background-color: #fafafa;
+}
+
+/* ✅ Boutons d'action dans le tableau */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.btn-view, 
+.btn-edit, 
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+/* ✅ Icônes dans les boutons */
+.btn-view i,
+.btn-edit i,
+.btn-delete i {
+    margin-right: 4px;
+}
+
+/* ✅ Bouton Voir */
+.btn-view {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #138496;
+}
+
+/* ✅ Bouton Modifier */
+.btn-edit {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+/* ✅ Bouton Supprimer */
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* ✅ Messages d'erreur et de succès */
+.error-message {
+    background-color: #ffcccc;
+    padding: 12px;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.success-message {
+    background-color: #d4edda;
+    padding: 12px;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btn-view, 
+    .btn-edit, 
+    .btn-delete {
+        width: 100%; /* ✅ Pleine largeur sur mobile */
+    }
+}
+
+/* ✅ Suppression du cadre noir en bas */
+footer {
+    display: none;
+}
+
+/* ✅ Pleine largeur sur petit écran */
+@media (max-width: 480px) {
+    .btn-view, 
+    .btn-edit, 
+    .btn-delete {
+        width: 100%;
+    }
+}
