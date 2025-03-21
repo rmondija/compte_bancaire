@@ -43,6 +43,7 @@ $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <a href="index.php" class="logo">Tableau de Bord</a>
         <div class="nav-links">
+
             <a href="app\views\clients\create.php" class="btn-add">
                 <i class="fas fa-plus"></i> Ajouter Client
             </a>

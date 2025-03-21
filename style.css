@@ -66,6 +66,7 @@ input[type="password"] {
     font-size: 16px;
     outline: none;
     transition: border 0.3s ease;
+    background-color: #fafafa;
 }
 
 input[type="email"]:focus,
@@ -73,7 +74,7 @@ input[type="password"]:focus {
     border-color: #007bff;
 }
 
-/* ✅ Bouton */
+/* ✅ Bouton de connexion */
 .btn-login {
     background-color: #007bff;
     color: #ffffff;
@@ -84,6 +85,7 @@ input[type="password"]:focus {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-weight: 500;
 }
 
 .btn-login:hover {
@@ -106,8 +108,6 @@ input[type="password"]:focus {
 .error-message i {
     font-size: 18px;
 }
-
-
 
 /* ✅ Barre de navigation */
 .navbar {
@@ -160,6 +160,31 @@ input[type="password"]:focus {
 
 .btn-logout:hover {
     background-color: #c82333;
+}
+
+/* ✅ Bouton Ajouter Client en vert */
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add i {
+    margin-right: 6px;
+}
+
+.btn-add:hover {
+    background-color: #218838; /* Vert foncé au survol */
 }
 
 /* ✅ Tableau */
@@ -273,5 +298,10 @@ input[type="password"]:focus {
     input[type="password"],
     .btn-login {
         font-size: 14px;
+    }
+
+    .btn-add {
+        font-size: 12px;
+        padding: 8px;
     }
 }
