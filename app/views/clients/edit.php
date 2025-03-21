@@ -10,11 +10,12 @@ if ($clientId > 0) {
 
     // ✅ Sélectionner le client par son ID
     $stmt = $db->prepare("SELECT * FROM client WHERE id = :id");
-    $stmt->execute(['id' => $clientId]);
+    $stmt->bindValue(':id', $clientId, PDO::PARAM_INT);
+    $stmt->execute();
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$client) {
-        die("Client non trouvé.");
+        die("Erreur : Client non trouvé.");
     }
 }
 
@@ -27,23 +28,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $adresse = trim($_POST['adresse']);
 
     if (!empty($nom) && !empty($prenom) && !empty($email) && !empty($telephone) && !empty($adresse)) {
-        $stmt = $db->prepare("
-            UPDATE client 
-            SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse 
-            WHERE id = :id
-        ");
-        $stmt->execute([
-            'nom' => $nom,
-            'prenom' => $prenom,
-            'email' => $email,
-            'telephone' => $telephone,
-            'adresse' => $adresse,
-            'id' => $clientId
-        ]);
+        try {
+            $stmt = $db->prepare("
+                UPDATE client 
+                SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse 
+                WHERE id = :id
+            ");
+            $stmt->bindValue(':nom', $nom, PDO::PARAM_STR);
+            $stmt->bindValue(':prenom', $prenom, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->bindValue(':telephone', $telephone, PDO::PARAM_STR);
+            $stmt->bindValue(':adresse', $adresse, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $clientId, PDO::PARAM_INT);
+            $stmt->execute();
 
-        // ✅ Redirection après mise à jour
-        header('Location: index.php?url=dashboard');
-        exit();
+            // ✅ Fermeture de la connexion
+            $db = null;
+
+            // ✅ Redirection après mise à jour
+            header('Location: index.php?url=dashboard');
+            exit();
+
+        } catch (PDOException $e) {
+            $error = "Erreur lors de la mise à jour : " . $e->getMessage();
+        }
     } else {
         $error = "Tous les champs sont requis.";
     }
@@ -64,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <a href="<?= BASE_URL ?>index.php" class="logo">Tableau de Bord</a>
         <div class="nav-links">
-            <a href="<?= BASE_URL ?>app\views\clients\create.php" class="btn-add">
+            <a href="<?= BASE_URL ?>app/views/clients/create.php" class="btn-add">
                 <i class="fas fa-plus"></i> Nouveau Client
             </a>
             <a href="<?= BASE_URL ?>logout.php" class="btn-logout">

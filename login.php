@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- ✅ Fichier CSS -->
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- ✅ Message d'erreur -->
         <?php if (!empty($error)): ?>
             <div class="error-message">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-exclamation-circle"></i>
                 <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>

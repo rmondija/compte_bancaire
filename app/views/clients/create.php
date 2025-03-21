@@ -1,4 +1,35 @@
-<?php require_once __DIR__ . '/../../../config/config.php'; ?>
+<?php
+require_once __DIR__ . '/../../../config/config.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nom = htmlspecialchars(trim($_POST['nom']));
+    $prenom = htmlspecialchars(trim($_POST['prenom']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $telephone = htmlspecialchars(trim($_POST['telephone']));
+    $adresse = htmlspecialchars(trim($_POST['adresse']));
+
+    if (!empty($nom) && !empty($prenom) && !empty($email) && !empty($telephone) && !empty($adresse)) {
+        try {
+            $sql = "INSERT INTO client (nom, prenom, email, telephone, adresse) 
+                    VALUES (:nom, :prenom, :email, :telephone, :adresse)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':nom' => $nom,
+                ':prenom' => $prenom,
+                ':email' => $email,
+                ':telephone' => $telephone,
+                ':adresse' => $adresse
+            ]);
+            header("Location: " . BASE_URL . "index.php?url=dashboard");
+            exit;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    } else {
+        echo "<p style='color:red;'>Tous les champs sont obligatoires !</p>";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
