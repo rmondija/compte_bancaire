@@ -62,6 +62,7 @@ $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
+                <th>Prénom</th>
                 <th>Email</th>
                 <th>Téléphone</th>
                 <th>Adresse</th>
@@ -73,6 +74,7 @@ $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td><?= htmlspecialchars($client['id']) ?></td>
                     <td><?= htmlspecialchars($client['nom']) ?></td>
+                    <td><?= htmlspecialchars($client['prenom']) ?></td>
                     <td><?= htmlspecialchars($client['email']) ?></td>
                     <td><?= htmlspecialchars($client['telephone']) ?></td>
                     <td><?= htmlspecialchars($client['adresse']) ?></td>

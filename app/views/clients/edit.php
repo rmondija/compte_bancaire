@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = null;
 
             // ✅ Redirection après mise à jour
-            header('Location: index.php?url=dashboard');
+            header("Location: " . BASE_URL . "index.php?url=dashboard");
             exit();
 
         } catch (PDOException $e) {
