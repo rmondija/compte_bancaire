@@ -23,7 +23,7 @@ if ($clientId > 0) {
 <head>
     <meta charset="UTF-8">
     <title>Détails du Client</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>style.css">
 </head>
 <body>
 
