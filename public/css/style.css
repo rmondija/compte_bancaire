@@ -1,0 +1,208 @@
+﻿/* THEMES */
+:root {
+    --bg: #f5f7fb;
+    --text: #222;
+    --card-bg: #fff;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* SIDEBAR */
+#sidebar {
+    width: 240px;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+#sidebar .nav-link {
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: 0.2s;
+}
+
+#sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* CARDS */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+}
+
+/* TABLES */
+table.table {
+    margin-bottom: 0;
+}
+
+#clientsTable > :not(caption) > * > *,
+#comptesTable > :not(caption) > * > * {
+    background-color: #ffffff;
+}
+
+#clientsTable > thead > tr > th,
+#comptesTable > thead > tr > th,
+#administrateursTable > thead > tr > th,
+#contratsTable > thead > tr > th {
+    background-color: #e9ecef !important;
+    color: #212529;
+}
+
+#clientsTable.table-striped > tbody > tr:nth-of-type(odd) > *,
+#comptesTable.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-accent-bg: #ffffff;
+}
+
+/* TITRES */
+h1 {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 0.2rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #0d3b66;
+}
+
+h1::before {
+    content: "";
+    width: 0.45rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: #0d6efd;
+}
+
+.password-toggle-text {
+    background: #fff;
+    color: var(--bs-secondary-color, #6c757d);
+    border-top: 1px solid #ced4da !important;
+    border-bottom: 1px solid #ced4da !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.password-toggle-text:hover,
+.password-toggle-text.active {
+    background: #fff;
+    color: #0d6efd;
+}
+
+#adminPasswordInput {
+    border-right: 0;
+}
+
+#toggleAdminPassword {
+    border-color: var(--bs-border-color, #ced4da);
+    border-left: 0;
+}
+
+#toggleAdminPassword:hover {
+    color: #fff;
+    background: #0d6efd;
+}
+
+/* ======================
+   RESPONSIVE MOBILE
+   ====================== */
+
+/* Topbar mobile */
+.mobile-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #0d6efd;
+    z-index: 1060;
+    flex-shrink: 0;
+}
+
+/* Overlay (fond semi-transparent derrière la sidebar ouverte) */
+#sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+#sidebarOverlay.active {
+    display: block;
+}
+
+@media (max-width: 767.98px) {
+    /* Corps : empile sidebar+main, laisse place à la topbar */
+    body {
+        display: block !important;
+        padding-top: 56px;
+    }
+
+    /* Sidebar : fixe, masquée par défaut, slide-in au clic burger */
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 240px;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.28s ease;
+        overflow-y: auto;
+    }
+    #sidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Contenu principal : pleine largeur, padding réduit */
+    main {
+        width: 100%;
+        padding: 1rem !important;
+    }
+
+    /* Titres */
+    h1 {
+        display: flex;
+        width: 100%;
+        padding: 0.15rem 0;
+        font-size: 1.2rem;
+    }
+
+    h1::before {
+        width: 0.35rem;
+        height: 1.35rem;
+    }
+
+    /* Cards contenant des tableaux : scroll horizontal */
+    .card.overflow-hidden {
+        overflow: visible !important;
+    }
+    .card.overflow-hidden > .card-body {
+        overflow-x: auto;
+    }
+
+    /* Boutons actions dans les tableaux : plus compacts */
+    td .btn-sm {
+        font-size: 0.72rem;
+        padding: 0.18rem 0.35rem;
+    }
+
+    /* Formulaires : padding réduit */
+    .card.p-4 {
+        padding: 1rem !important;
+    }
+
+    /* Barre de recherche + bouton Ajouter : passe en colonne */
+    .d-flex.align-items-center.gap-2.mb-3 {
+        flex-wrap: wrap;
+    }
+}
+

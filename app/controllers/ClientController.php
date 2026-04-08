@@ -1,136 +1,97 @@
 <?php
+namespace App\Controllers;
 
-class ClientController {
+use App\Core\Controller;
+use App\Models\Client;
+use Exception;
 
-    //  Affichage des détails d'un client
-    public function details($id) {
-        $db = Database::connect();
+class ClientController extends Controller
+{
+public function index()
+    {
+        $clients = (new Client())->all();
+        $search = trim((string)($_GET['q'] ?? ''));
 
-        $stmt = $db->prepare("SELECT * FROM client WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        $client = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$client) {
-            http_response_code(404);
-            echo "Client introuvable.";
-            return;
+        if ($search !== '') {
+            $clients = array_values(array_filter($clients, static function ($client) use ($search) {
+                $haystack = trim(
+                    (string)($client['nom'] ?? '') . ' ' .
+                    (string)($client['prenom'] ?? '') . ' ' .
+                    (string)($client['email'] ?? '')
+                );
+                return stripos($haystack, $search) !== false;
+            }));
         }
 
-        //  Récupération des comptes associés
-        $stmtComptes = $db->prepare("SELECT * FROM compte WHERE client_id = :client_id");
-        $stmtComptes->execute(['client_id' => $id]);
-        $comptes = $stmtComptes->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        usort($clients, static function ($a, $b) {
+            $nameA = mb_strtolower(trim((string)($a['nom'] ?? '') . ' ' . (string)($a['prenom'] ?? '')));
+            $nameB = mb_strtolower(trim((string)($b['nom'] ?? '') . ' ' . (string)($b['prenom'] ?? '')));
+            return $nameA <=> $nameB;
+        });
 
-        //  Récupération des contrats associés
-        $stmtContrats = $db->prepare("
-            SELECT contrat.* 
-            FROM contrat 
-            INNER JOIN compte ON contrat.compte_id = compte.id 
-            WHERE compte.client_id = :client_id
-        ");
-        $stmtContrats->execute(['client_id' => $id]);
-        $contrats = $stmtContrats->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        $openClientId = isset($_GET['open']) ? (int) $_GET['open'] : null;
 
-        require_once __DIR__ . '/../views/clients/details.php';
+        // Pour chaque client, récupérer ses comptes et contrats
+        foreach ($clients as &$client) {
+            $client['comptes'] = (new \App\Models\Compte())->all();
+            $client['contrats'] = (new \App\Models\Contrat())->all();
+        }
+        
+        $this->render('client/index', ['items' => $clients, 'openClientId' => $openClientId, 'search' => $search]);
     }
 
-    //  Modification du client
-    public function edit($id) {
-    $db = Database::connect();
-
-    //  Récupérer les informations du client
-    $stmt = $db->prepare("SELECT * FROM client WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-    $client = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$client) {
-        http_response_code(404);
-        echo "Client introuvable.";
-        return;
+    public function show(int $id)
+    {
+        $data = (new Client())->find($id);
+        $this->render('client/show', compact('data'));
     }
 
-    //  Mise à jour du client après soumission du formulaire
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nom = htmlspecialchars(trim($_POST['nom']));
-        $prenom = htmlspecialchars(trim($_POST['prenom']));
-        $email = htmlspecialchars(trim($_POST['email']));
-        $telephone = htmlspecialchars(trim($_POST['telephone']));
-        $adresse = htmlspecialchars(trim($_POST['adresse']));
+    public function create()
+    {
+        $this->render('client/form', get_defined_vars());
+    }
 
-        if ($nom && $prenom && $email && $telephone && $adresse) {
-            $stmt = $db->prepare("
-                UPDATE client 
-                SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, adresse = :adresse
-                WHERE id = :id
-            ");
-            $stmt->execute([
-                'nom' => $nom,
-                'prenom' => $prenom,
-                'email' => $email,
-                'telephone' => $telephone,
-                'adresse' => $adresse,
-                'id' => $id
-            ]);
+    public function store()
+    {
+        try {
+            // Debug: log the received data
+            error_log("Store called with POST data: " . print_r($_POST, true));
 
-            header('Location: ' . BASE_URL . 'index.php?url=dashboard');
+            (new Client())->create($_POST);
+
+            // Clean output buffer if any
+            if (ob_get_length() !== false && ob_get_length() > 0) {
+                ob_end_clean();
+            }
+
+            // Redirect to index with success message
+            header("Location: ?controller=client&action=index&success=1");
             exit;
+        } catch (Exception $e) {
+            error_log("Error in store: " . $e->getMessage());
+            die("Erreur lors de l'enregistrement: " . $e->getMessage());
         }
     }
 
-    require_once __DIR__ . '/../views/clients/edit.php';
-}
-
-public function create() {
-    $db = Database::connect();
-
-    // ✅ Récupération automatique du premier administrateur existant
-    $stmt = $db->prepare("SELECT id FROM administrateur LIMIT 1");
-    $stmt->execute();
-    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$admin) {
-        die("Erreur : Aucun administrateur trouvé. Veuillez en créer un d'abord.");
+    public function edit(int $id)
+    {
+        $data = (new Client())->find($id);
+        $this->render('client/form', get_defined_vars());
     }
 
-    $administrateur_id = $admin['id'];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nom = htmlspecialchars(trim($_POST['nom']));
-        $prenom = htmlspecialchars(trim($_POST['prenom']));
-        $email = htmlspecialchars(trim($_POST['email']));
-        $telephone = htmlspecialchars(trim($_POST['telephone']));
-        $adresse = htmlspecialchars(trim($_POST['adresse']));
-
-        if ($nom && $prenom && $email && $telephone && $adresse) {
-            $stmt = $db->prepare("
-                INSERT INTO client (administrateur_id, nom, prenom, email, telephone, adresse) 
-                VALUES (:administrateur_id, :nom, :prenom, :email, :telephone, :adresse)
-            ");
-            $stmt->execute([
-                'administrateur_id' => $administrateur_id,
-                'nom' => $nom,
-                'prenom' => $prenom,
-                'email' => $email,
-                'telephone' => $telephone,
-                'adresse' => $adresse
-            ]);
-
-            header('Location: ' . BASE_URL . 'index.php?url=dashboard');
-            exit;
-        } else {
-            echo "Tous les champs sont obligatoires.";
-        }
+    public function update(int $id)
+    {
+        (new Client())->update($id, $_POST);
+        header("Location: ?controller=client&action=index&open={$id}");
     }
 
-    require_once __DIR__ . '/../views/clients/create.php';
-}
-
-    // ✅ Suppression d'un client
-    public function delete($id) {
-        $db = Database::connect();
-        $stmt = $db->prepare("DELETE FROM client WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        header('Location: ' . BASE_URL . 'index.php?url=dashboard');
-        exit;
+    public function delete(int $id)
+    {
+        (new Client())->delete($id);
+        header("Location: ?controller=client&action=index");
     }
 }
+
+
+
+
